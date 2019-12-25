@@ -32,7 +32,7 @@ class WeatherRepoImpl(
             "q" to city,
             "key" to BuildConfig.API_KEY,
             "num_of_days" to "3",
-            "tp" to "24",
+            "tp" to "1",
             "format" to "json"
         )
     }
