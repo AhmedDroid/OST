@@ -21,6 +21,11 @@ android {
         buildConfigField("String", "BASE_URL", property("BASE_URL"))
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 
 }
 

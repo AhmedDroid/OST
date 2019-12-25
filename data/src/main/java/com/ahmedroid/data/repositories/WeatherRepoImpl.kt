@@ -1,5 +1,6 @@
 package com.ahmedroid.data.repositories
 
+import android.util.Log
 import com.ahmedroid.data.BuildConfig
 import com.ahmedroid.data.models.UpdateEvent
 import com.ahmedroid.data.service.WeatherAPIService
@@ -22,9 +23,9 @@ class WeatherRepoImpl(
                     realm.copyToRealm(weatherObject)
                     EventBus.getDefault().post(UpdateEvent())
                 }
-            }, {
-
-            }).dispose()
+            }, {throwable ->
+                Log.d("test", throwable.message)
+            })
     }
 
     private fun buildRequestQueries(city: String): Map<String, String?> {
