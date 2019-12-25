@@ -1,17 +1,16 @@
 package com.ahmedroid.ost
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ahmedroid.data.models.UpdateEvent
-import com.ahmedroid.data.repositories.WeatherRepo
+import com.ahmedroid.data.State
 import com.ahmedroid.data.repositories.WeatherRepoImpl
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
-import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,12 +24,27 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(mainActivityToolbar)
 
-        mainViewModel = WeatherCardViewModel(WeatherRepoImpl((application as App).weatherService, Realm.getDefaultInstance()))
-        mainViewModel?.getWeatherAt("")
-    }
+        mainActivityRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-    @Subscribe
-    fun gets(updateEvent: UpdateEvent) {
-        Log.d("test", "te")
+        mainViewModel = WeatherCardViewModel(
+            WeatherRepoImpl(
+                (application as App).weatherService,
+                Realm.getDefaultInstance()
+            )
+        )
+        mainViewModel?.getWeatherAt("Amman")?.observe(this, Observer {
+            when (it) {
+                is State.Loading -> {
+                    mainActivitySwipeRefreshLayout.isRefreshing = it.isLoading
+                }
+                is State.Success -> {
+                    mainActivityRecyclerView.adapter = WeatherAdapter(it.response)
+                }
+                is State.Error -> {
+                    Toast.makeText(this, it.errMsg, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 }

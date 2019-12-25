@@ -6,7 +6,5 @@ import io.realm.annotations.RealmClass
 
 @RealmClass
 open class WeatherIconUrl(
-    @SerializedName("value") var value: String
-) : RealmObject() {
-    constructor() : this(value = "")
-}
+    @SerializedName("value") var value: String? = null
+) : RealmObject()

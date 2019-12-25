@@ -2,39 +2,55 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_marginBottom="16dp"
+    android:background="@color/colorPrimary">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/headerWeatherIconImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/headerCityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        tools:text="Amman"
         android:textColor="@android:color/primary_text_light"
-        android:textSize="32sp"
+        android:textSize="21sp"
+        app:layout_constraintEnd_toStartOf="@+id/headerWeatherTemperatureTextView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/headerWeatherIconImageView"
-        app:layout_constraintTop_toTopOf="@+id/headerWeatherIconImageView" />
+        app:layout_constraintTop_toTopOf="@+id/headerWeatherIconImageView"
+        tools:text="Amman" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/headerWeatherStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        tools:text="Haze"
+        android:layout_marginEnd="8dp"
         android:textColor="@android:color/secondary_text_light"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/headerWeatherTemperatureTextView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/headerCityTextView"
-        app:layout_constraintTop_toBottomOf="@+id/headerCityTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/headerCityTextView"
+        tools:text="Haze" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/headerWeatherTemperatureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/secondary_text_light"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/headerCityTextView"
+        tools:text="Haze" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

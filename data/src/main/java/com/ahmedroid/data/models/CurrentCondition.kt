@@ -7,15 +7,8 @@ import io.realm.annotations.RealmClass
 
 @RealmClass
 open class CurrentCondition(
-    @SerializedName("temp_C") var celesiusTemperature: Int,
-    @SerializedName("temp_F") var fahrenheitTemperature: Int,
-    @SerializedName("observation_time") var observationTime: String,
-    @SerializedName("weatherIconUrl") var weatherIconUrl: RealmList<WeatherIconUrl>
-) : RealmObject() {
-    constructor() : this(
-        celesiusTemperature = -1,
-        fahrenheitTemperature = -1,
-        observationTime = "",
-        weatherIconUrl = RealmList()
-    )
-}
+    @SerializedName("temp_C") var celesiusTemperature: String? = null,
+    @SerializedName("temp_F") var fahrenheitTemperature: String? = null,
+    @SerializedName("weatherIconUrl") var weatherIconUrl: RealmList<WeatherIconUrl>? = null,
+    @SerializedName("weatherDesc") var weatherStatus: RealmList<WeatherStatus>? = null
+) : RealmObject()

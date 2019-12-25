@@ -5,7 +5,6 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass
-open class Request(
-    @SerializedName("type") var type: String? = null,
-    @SerializedName("query") var query: String? = null
+open class WeatherStatus(
+    @SerializedName("value") var value: String? = null
 ) : RealmObject()
