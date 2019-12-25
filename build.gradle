@@ -5,7 +5,7 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
@@ -21,8 +21,20 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+
     }
+}
+
+subprojects {
+    if (project.name == "app") {
+        apply plugin: "com.android.application"
+    } else {
+        apply plugin: "com.android.library"
+    }
+    apply plugin: "kotlin-android"
+    apply plugin: "kotlin-android-extensions"
+    apply plugin: "kotlin-kapt"
+    apply plugin: "realm-android"
 }
 
 task clean(type: Delete) {
