@@ -11,10 +11,6 @@ android {
         experimental = true
     }
 
-    dataBinding {
-        enabled true
-    }
-
     defaultConfig {
         applicationId "com.ahmedroid.ost"
         minSdkVersion 23

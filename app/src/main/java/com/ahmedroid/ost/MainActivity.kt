@@ -3,8 +3,6 @@ package com.ahmedroid.ost
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmedroid.data.State
@@ -13,19 +11,25 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var viewDataBinding: ViewDataBinding? = null
-
     private var mainViewModel: WeatherCardViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
+        initViews()
+
+        initViewModel()
+    }
+
+    private fun initViews() {
         setSupportActionBar(mainActivityToolbar)
 
         mainActivityRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    }
 
+    private fun initViewModel() {
         mainViewModel = WeatherCardViewModel(WeatherRepoImpl((application as App).weatherService))
 
         mainViewModel?.getWeatherAt("Amman")?.observe(this, Observer {
