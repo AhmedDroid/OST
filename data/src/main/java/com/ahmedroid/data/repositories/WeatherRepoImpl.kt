@@ -4,28 +4,42 @@ import com.ahmedroid.data.BuildConfig
 import com.ahmedroid.data.models.WeatherDisplayData
 import com.ahmedroid.data.models.WeatherObject
 import com.ahmedroid.data.service.WeatherAPIService
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.realm.Realm
 
 class WeatherRepoImpl(
-    private val weatherService: WeatherAPIService,
-    private val realm: Realm
+    private val weatherService: WeatherAPIService
 ) : WeatherRepo {
 
-    override fun getWeatherInfoAt(city: String): Single<WeatherDisplayData> {
-        return getWeatherDisplayData(weatherService.getCarDetails(buildRequestQueries(city)).map { it.data })
+    override fun getWeatherInfoAt(city: String): Observable<WeatherDisplayData> {
+
+        val localWeatherDisplayData =
+            Realm.getDefaultInstance().where(WeatherObject::class.java).findAll().last()
+                ?.toWeatherDisplayData()
+
+        return Observable.create<WeatherDisplayData> {
+            if (localWeatherDisplayData != null) {
+                it.onNext(localWeatherDisplayData)
+            }
+
+            it.onNext(
+                getWeatherDisplayData(
+                    weatherService.getWeatherDetails(
+                        buildRequestQueries(
+                            city
+                        )
+                    ).map { it.data }).blockingGet()
+            )
+        }
     }
 
     private fun getWeatherDisplayData(weatherObject: Single<WeatherObject?>): Single<WeatherDisplayData> {
         return weatherObject.flatMap { weatherObject ->
-            return@flatMap Single.just(WeatherDisplayData(
-                cityName = weatherObject.request?.get(0)?.query,
-                tempratureValue = weatherObject.currentCondition?.get(0)?.celesiusTemperature,
-                weatherStatus = weatherObject.currentCondition?.get(0)?.weatherStatus?.get(0)?.value,
-                weatherIconUrl = weatherObject.currentCondition?.get(0)?.weatherIconUrl?.get(0)?.value,
-                weatherTempsHourly = weatherObject.weather?.get(0)?.hourly?.toTypedArray()
-                )
-            )
+            Realm.getDefaultInstance().executeTransaction {
+                it.copyToRealm(weatherObject)
+            }
+            return@flatMap Single.just(weatherObject.toWeatherDisplayData())
         }
     }
 
@@ -38,5 +52,4 @@ class WeatherRepoImpl(
             "format" to "json"
         )
     }
-
 }

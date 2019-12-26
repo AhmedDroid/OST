@@ -8,7 +8,7 @@ import retrofit2.http.QueryMap
 interface WeatherAPIService {
 
     @GET("weather.ashx")
-    fun getCarDetails(
+    fun getWeatherDetails(
         @QueryMap(encoded = false) requestQuery: Map<String, String?>
     ): Single<WeatherResponse>
 }

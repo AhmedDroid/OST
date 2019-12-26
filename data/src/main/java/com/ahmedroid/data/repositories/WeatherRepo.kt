@@ -1,9 +1,9 @@
 package com.ahmedroid.data.repositories
 
 import com.ahmedroid.data.models.WeatherDisplayData
-import io.reactivex.Single
+import io.reactivex.Observable
 
 interface WeatherRepo {
 
-    fun getWeatherInfoAt(city: String): Single<WeatherDisplayData>
+    fun getWeatherInfoAt(city: String): Observable<WeatherDisplayData>
 }

@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmedroid.data.State
 import com.ahmedroid.data.repositories.WeatherRepoImpl
-import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -27,12 +26,8 @@ class MainActivity : AppCompatActivity() {
         mainActivityRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        mainViewModel = WeatherCardViewModel(
-            WeatherRepoImpl(
-                (application as App).weatherService,
-                Realm.getDefaultInstance()
-            )
-        )
+        mainViewModel = WeatherCardViewModel(WeatherRepoImpl((application as App).weatherService))
+
         mainViewModel?.getWeatherAt("Amman")?.observe(this, Observer {
             when (it) {
                 is State.Loading -> {
