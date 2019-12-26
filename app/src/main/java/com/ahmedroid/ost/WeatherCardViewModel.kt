@@ -1,6 +1,5 @@
 package com.ahmedroid.ost
 
-import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +11,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-class WeatherCardViewModel(private val weatherRepo: WeatherRepo) : AndroidViewModel(Application()) {
+open class WeatherCardViewModel(
+    app: App,
+    private val weatherRepo: WeatherRepo
+) : AndroidViewModel(app) {
 
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 

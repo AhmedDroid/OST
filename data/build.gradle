@@ -19,6 +19,7 @@ android {
     buildTypes.all {
         buildConfigField("String", "API_KEY", property("API_KEY"))
         buildConfigField("String", "BASE_URL", property("BASE_URL"))
+        buildConfigField("String", "GOOGLE_PLACES_API_KEY", GOOGLE_PLACES_API_KEY)
     }
 
     compileOptions {
