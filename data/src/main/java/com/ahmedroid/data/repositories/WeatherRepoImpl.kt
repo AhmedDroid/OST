@@ -12,11 +12,19 @@ class WeatherRepoImpl(
     private val weatherService: WeatherAPIService
 ) : WeatherRepo {
 
+    val realm: Realm by lazy {
+        Realm.getDefaultInstance()
+    }
+
     override fun getWeatherInfoAt(city: String): Observable<WeatherDisplayData> {
 
-        val localWeatherDisplayData =
-            Realm.getDefaultInstance().where(WeatherObject::class.java).findAll().last()
+        val localWeatherDisplayData = if (realm.where(WeatherObject::class.java).findAll().size > 0) {
+            realm.where(WeatherObject::class.java).findAll().last()
                 ?.toWeatherDisplayData()
+        } else {
+            null
+        }
+        Realm.getDefaultInstance()
 
         return Observable.create<WeatherDisplayData> {
             if (localWeatherDisplayData != null) {

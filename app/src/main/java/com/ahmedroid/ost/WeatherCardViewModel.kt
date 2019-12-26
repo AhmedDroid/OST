@@ -28,7 +28,9 @@ open class WeatherCardViewModel(
                 liveData.value = State.Loading(true)
             }
             .subscribe({
-                liveData.value = State.Success(it)
+                if (null != it) {
+                    liveData.value = State.Success(it)
+                }
                 liveData.value = State.Loading(false)
             }, {
                 liveData.value = State.Error(it.message)
