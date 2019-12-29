@@ -6,7 +6,6 @@ This project demonstrate that
 - MVVM arch
 - RxJava 2
 - Using Realm for local database.
-- Material design for UI/UX (only the margins and sizes as am the worst in colouring and design)
 - AndroidX
 - A small set of the Android architecture components
 
