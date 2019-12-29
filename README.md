@@ -14,4 +14,4 @@ This project demonstrate that
 This project is using modular android application with Model-View-ViewModel architecture
 
 # Documentation / comments
-I believe that private projects doesn't need any documentation as long as the code is clean because the clean code should explain it self.
+I believe that projects doesn't need any documentation as long as the code is clean because the clean code should explain it self.
